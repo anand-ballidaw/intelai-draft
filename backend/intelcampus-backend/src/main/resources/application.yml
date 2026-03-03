@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: intelcampus-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/intelcampus_db
+    username: postgres
+    password: 220690
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: false   # 🔴 TEMPORARILY DISABLED
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # ✅ let Hibernate create tables
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+
+# ======================================================
+# INTELCAMPUS POLICY CONFIGURATION (STEP 8.8)
+# ======================================================
+intelcampus:
+  policy:
+    finance-attendance:
+      enabled: true
+      minimum-paid-ratio: 1.0
+      policy-version: v1
