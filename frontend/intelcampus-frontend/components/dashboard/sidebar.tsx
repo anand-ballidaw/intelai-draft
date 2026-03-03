@@ -1,53 +1,54 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useAuthStore } from "@/stores/auth.store";
-import { cn } from "@/lib/utils";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { getAuthUser } from "@/lib/auth/auth-client"
+import { navigationConfig } from "@/lib/navigation/navigation-config"
+import { featureAccessMap } from "@/lib/subscription/subscription-config"
 
-interface Props {
-    onNavigate?: () => void;
-}
+export default function Sidebar() {
+    const pathname = usePathname()
+    const user = getAuthUser()
 
-export function DashboardSidebar({ onNavigate }: Props) {
-    const pathname = usePathname();
-    const role = useAuthStore((state) => state.role);
+    if (!user) return null
 
-    const navItems = [
-        { name: "Overview", href: "/dashboard", roles: ["MANAGEMENT", "STUDENT"] },
-        { name: "Rankings", href: "/dashboard/rankings", roles: ["MANAGEMENT", "STUDENT"] },
-        { name: "Courses", href: "/dashboard/courses", roles: ["MANAGEMENT"] },
-    ];
+    const navItems = navigationConfig[user.role]
 
     return (
-        <aside className="h-screen w-64 max-w-[85vw] border-r bg-background p-4 sm:p-6">
-            <h2 className="text-lg font-bold">IntelCampus</h2>
+        <aside className="w-64 border-r bg-background min-h-screen p-6">
+            <div className="mb-8">
+                <h2 className="text-xl font-bold">IntelCampus</h2>
+                <p className="text-sm text-muted-foreground mt-1 capitalize">
+                    {user.role}
+                </p>
+            </div>
 
-            <nav className="mt-8 space-y-2">
-                {navItems
-                    .filter((item) => role && item.roles.includes(role))
-                    .map((item) => {
-                        const isActive =
-                            pathname === item.href ||
-                            pathname.startsWith(item.href + "/");
+            <nav className="space-y-2">
+                {navItems.map((item) => {
+                    const isActive = pathname === item.href
+                    const featureConfig = featureAccessMap[item.href]
+                    const isLocked =
+                        featureConfig?.requirePro && !user.subscriptionActive
 
-                        return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={onNavigate}
-                                className={cn(
-                                    "block rounded-md px-3 py-2 text-sm transition-colors",
-                                    isActive
-                                        ? "bg-muted font-medium"
-                                        : "text-muted-foreground hover:bg-muted/40"
-                                )}
-                            >
-                                {item.name}
-                            </Link>
-                        );
-                    })}
+                    return (
+                        <Link
+                            key={item.href}
+                            href={isLocked ? "/pricing" : item.href}
+                            className={`flex justify-between items-center rounded-md px-3 py-2 text-sm transition ${isActive
+                                    ? "bg-primary text-primary-foreground"
+                                    : "hover:bg-muted"
+                                }`}
+                        >
+                            <span>{item.title}</span>
+                            {isLocked && (
+                                <span className="text-xs text-muted-foreground">
+                                    🔒
+                                </span>
+                            )}
+                        </Link>
+                    )
+                })}
             </nav>
         </aside>
-    );
+    )
 }

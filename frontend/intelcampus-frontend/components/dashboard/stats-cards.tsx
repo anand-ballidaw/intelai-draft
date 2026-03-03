@@ -1,28 +1,31 @@
-"use client";
+"use client"
 
-import { useCourseStore } from "@/stores/course.store";
-import { Card, CardContent } from "@/components/ui/card";
+interface StatsCardProps {
+    title: string
+    value: string | number
+    description?: string
+}
 
-export function StatsCards() {
-    const courses = useCourseStore((state) => state.courses);
-
-    const stats = [
-        { title: "Total Students", value: "1,248" },
-        { title: "Active Courses", value: courses.length.toString() },
-        { title: "Average Rank", value: "Top 15%" },
-        { title: "Completion Rate", value: "82%" },
-    ];
-
+export default function StatsCard({
+    title,
+    value,
+    description,
+}: StatsCardProps) {
     return (
-        <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((stat) => (
-                <Card key={stat.title}>
-                    <CardContent className="p-6">
-                        <p className="text-sm text-muted-foreground">{stat.title}</p>
-                        <p className="mt-2 text-2xl font-semibold">{stat.value}</p>
-                    </CardContent>
-                </Card>
-            ))}
+        <div className="rounded-2xl border bg-background p-6 shadow-sm transition hover:shadow-md">
+            <h3 className="text-sm font-medium text-muted-foreground">
+                {title}
+            </h3>
+
+            <div className="mt-3 text-3xl font-bold tracking-tight">
+                {value}
+            </div>
+
+            {description && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                    {description}
+                </p>
+            )}
         </div>
-    );
+    )
 }

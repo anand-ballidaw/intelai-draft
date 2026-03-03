@@ -1,31 +1,43 @@
-"use client";
+"use client"
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/stores/auth.store";
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import {
+    isAuthenticated,
+    hasRole,
+    hasActiveSubscription,
+    UserRole,
+} from "@/lib/auth/auth-client"
 
-export function ProtectedRoute({
+interface ProtectedRouteProps {
+    children: React.ReactNode
+    requiredRole?: UserRole
+    requireSubscription?: boolean
+}
+
+export default function ProtectedRoute({
     children,
-}: {
-    children: React.ReactNode;
-}) {
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-    const hasHydrated = useAuthStore((state) => state.hasHydrated);
-    const router = useRouter();
+    requiredRole,
+    requireSubscription,
+}: ProtectedRouteProps) {
+    const router = useRouter()
 
     useEffect(() => {
-        if (hasHydrated && !isAuthenticated) {
-            router.push("/signin");
+        if (!isAuthenticated()) {
+            router.replace("/login")
+            return
         }
-    }, [isAuthenticated, hasHydrated, router]);
 
-    if (!hasHydrated) {
-        return null;
-    }
+        if (requiredRole && !hasRole(requiredRole)) {
+            router.replace("/dashboard")
+            return
+        }
 
-    if (!isAuthenticated) {
-        return null;
-    }
+        if (requireSubscription && !hasActiveSubscription()) {
+            router.replace("/pricing")
+            return
+        }
+    }, [requiredRole, requireSubscription, router])
 
-    return <>{children}</>;
+    return <>{children}</>
 }
