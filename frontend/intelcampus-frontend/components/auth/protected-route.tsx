@@ -20,11 +20,13 @@ export default function ProtectedRoute({
     requiredRole,
     requireSubscription,
 }: ProtectedRouteProps) {
+
     const router = useRouter()
 
     useEffect(() => {
+
         if (!isAuthenticated()) {
-            router.replace("/login")
+            router.replace("/signin")
             return
         }
 
@@ -37,6 +39,7 @@ export default function ProtectedRoute({
             router.replace("/pricing")
             return
         }
+
     }, [requiredRole, requireSubscription, router])
 
     return <>{children}</>

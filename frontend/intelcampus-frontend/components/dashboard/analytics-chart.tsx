@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
     LineChart,
@@ -8,36 +8,42 @@ import {
     Tooltip,
     ResponsiveContainer,
     CartesianGrid,
-} from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+} from "recharts"
 
 const data = [
-    { month: "Jan", students: 400 },
-    { month: "Feb", students: 450 },
-    { month: "Mar", students: 500 },
-    { month: "Apr", students: 480 },
-    { month: "May", students: 520 },
-    { month: "Jun", students: 600 },
-];
+    { month: "Jan", users: 120 },
+    { month: "Feb", users: 210 },
+    { month: "Mar", users: 320 },
+    { month: "Apr", users: 450 },
+    { month: "May", users: 620 },
+    { month: "Jun", users: 780 },
+]
 
 export function AnalyticsChart() {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Student Growth Overview</CardTitle>
-            </CardHeader>
+        <div className="rounded-xl border p-6 bg-background">
+            <h2 className="text-lg font-semibold mb-4">
+                Student Growth
+            </h2>
 
-            <CardContent className="h-64 sm:h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={data}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line type="monotone" dataKey="students" stroke="#3b82f6" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </CardContent>
-        </Card>
-    );
+            <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+
+                    <XAxis dataKey="month" />
+
+                    <YAxis />
+
+                    <Tooltip />
+
+                    <Line
+                        type="monotone"
+                        dataKey="users"
+                        stroke="#2563eb"
+                        strokeWidth={3}
+                    />
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
+    )
 }

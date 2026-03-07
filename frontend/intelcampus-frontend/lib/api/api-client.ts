@@ -1,50 +1,27 @@
-"use client"
-
 import axios from "axios"
-import { getAuthUser } from "@/lib/auth/auth-client"
+import { API_BASE_URL } from "./api-config"
 
-const apiClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/api",
+export const apiClient = axios.create({
+    baseURL: API_BASE_URL,
     headers: {
         "Content-Type": "application/json",
     },
-    withCredentials: true,
 })
 
-/*
-|--------------------------------------------------------------------------
-| Request Interceptor
-|--------------------------------------------------------------------------
-*/
+apiClient.interceptors.request.use((config) => {
+    const token = localStorage.getItem("intelcampus_token")
 
-apiClient.interceptors.request.use(
-    (config) => {
-        const user = getAuthUser()
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
 
-        // Future JWT support
-        if (user && user.subscriptionActive) {
-            // Example placeholder token
-            const mockToken = "mock-jwt-token"
-
-            config.headers.Authorization = `Bearer ${mockToken}`
-        }
-
-        return config
-    },
-    (error) => Promise.reject(error)
-)
-
-/*
-|--------------------------------------------------------------------------
-| Response Interceptor
-|--------------------------------------------------------------------------
-*/
+    return config
+})
 
 apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            // Future: auto logout on JWT expiry
             localStorage.removeItem("intelcampus_user")
             window.location.href = "/login"
         }
@@ -52,5 +29,3 @@ apiClient.interceptors.response.use(
         return Promise.reject(error)
     }
 )
-
-export default apiClient

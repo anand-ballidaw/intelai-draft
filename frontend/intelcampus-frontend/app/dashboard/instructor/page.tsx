@@ -1,35 +1,35 @@
 import ProtectedRoute from "@/components/auth/protected-route"
 import DashboardGrid from "@/components/dashboard/dashboard-grid"
-import StatCard from "@/components/dashboard/stat-card"
+import StatsCard from "@/components/dashboard/stats-card"
 
 export default function InstructorDashboard() {
     return (
-        <ProtectedRoute requiredRole="instructor">
+        <ProtectedRoute requiredRole="INSTRUCTOR">
             <div>
                 <h1 className="text-2xl font-semibold mb-8">
                     Instructor Overview
                 </h1>
 
                 <DashboardGrid>
-                    <StatCard
+                    <StatsCard
                         title="Total Courses"
                         value={6}
                         description="Courses you manage"
                     />
 
-                    <StatCard
+                    <StatsCard
                         title="Active Students"
                         value={142}
                         description="Across all courses"
                     />
 
-                    <StatCard
+                    <StatsCard
                         title="Pending Reviews"
                         value={8}
                         description="Assignments awaiting grading"
                     />
 
-                    <StatCard
+                    <StatsCard
                         title="Monthly Revenue"
                         value="₹48,000"
                         description="Estimated earnings"

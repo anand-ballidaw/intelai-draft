@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation"
 import { getAuthUser } from "@/lib/auth/auth-client"
 import { useState, useEffect } from "react"
+import GlobalSearch from "@/components/search/global-search"
+import NotificationBell from "@/components/notifications/notification-bell"
 
 export default function Topbar() {
     const router = useRouter()
@@ -26,6 +28,7 @@ export default function Topbar() {
 
     const toggleTheme = () => {
         const root = document.documentElement
+
         if (root.classList.contains("dark")) {
             root.classList.remove("dark")
             setIsDark(false)
@@ -37,9 +40,18 @@ export default function Topbar() {
 
     return (
         <header className="h-16 border-b bg-background flex items-center justify-between px-6">
-            <h1 className="text-lg font-semibold">Dashboard</h1>
 
+            {/* Left section */}
+            <div className="flex items-center gap-6">
+                <h1 className="text-lg font-semibold">Dashboard</h1>
+                <GlobalSearch />
+            </div>
+
+            {/* Right section */}
             <div className="flex items-center gap-4">
+
+                <NotificationBell />
+
                 <button
                     onClick={toggleTheme}
                     className="text-sm px-3 py-1 rounded-md border hover:bg-muted transition"
@@ -57,6 +69,7 @@ export default function Topbar() {
                 >
                     Logout
                 </button>
+
             </div>
         </header>
     )

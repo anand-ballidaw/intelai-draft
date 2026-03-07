@@ -1,25 +1,21 @@
-export interface SubscribeRequest {
-    plan: string;
-}
-
-export interface PaymentResponse {
-    checkoutUrl: string;
-}
-
-const simulateDelay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+import { apiClient } from "@/lib/api/api-client"
 
 export const subscriptionService = {
-    async createCheckoutSession(
-        data: SubscribeRequest
-    ): Promise<PaymentResponse> {
-        await simulateDelay(1000);
-
-        // 🔁 In future this will call backend:
-        // return api.post("/payments/checkout", data);
-
-        return {
-            checkoutUrl: `/checkout-success?plan=${data.plan}`,
-        };
+    getPlans: async () => {
+        const res = await apiClient.get("/subscriptions/plans")
+        return res.data
     },
-};
+
+    getCurrentPlan: async () => {
+        const res = await apiClient.get("/subscriptions/current")
+        return res.data
+    },
+
+    upgradePlan: async (planId: string) => {
+        const res = await apiClient.post("/subscriptions/upgrade", {
+            planId,
+        })
+
+        return res.data
+    },
+}

@@ -1,26 +1,48 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+"use client"
+
+const activities = [
+    {
+        id: 1,
+        text: "New student registered",
+        time: "2 minutes ago",
+    },
+    {
+        id: 2,
+        text: "Course 'React Fundamentals' published",
+        time: "1 hour ago",
+    },
+    {
+        id: 3,
+        text: "Subscription upgraded to Pro",
+        time: "3 hours ago",
+    },
+    {
+        id: 4,
+        text: "New instructor joined platform",
+        time: "Yesterday",
+    },
+]
 
 export function RecentActivity() {
-    const activities = [
-        "Student A improved rank in Mathematics.",
-        "New course 'Advanced Science' added.",
-        "Weekly analytics report generated.",
-        "Student B completed Technology module.",
-    ];
-
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-            </CardHeader>
+        <div className="rounded-xl border p-6 bg-background">
+            <h2 className="text-lg font-semibold mb-4">
+                Recent Activity
+            </h2>
 
-            <CardContent className="space-y-4">
-                {activities.map((activity, index) => (
-                    <p key={index} className="text-sm text-muted-foreground">
-                        • {activity}
-                    </p>
+            <ul className="space-y-4">
+                {activities.map((activity) => (
+                    <li
+                        key={activity.id}
+                        className="flex justify-between text-sm"
+                    >
+                        <span>{activity.text}</span>
+                        <span className="text-muted-foreground">
+                            {activity.time}
+                        </span>
+                    </li>
                 ))}
-            </CardContent>
-        </Card>
-    );
+            </ul>
+        </div>
+    )
 }

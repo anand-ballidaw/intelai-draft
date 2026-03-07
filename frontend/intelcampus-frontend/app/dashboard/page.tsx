@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StatsCards } from "@/components/dashboard/stats-cards";
+import StatsCard from "@/components/dashboard/stats-card";
 import { AnalyticsChart } from "@/components/dashboard/analytics-chart";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 
@@ -19,7 +19,17 @@ export default function DashboardPage() {
                 </p>
             </div>
 
-            <StatsCards />
+            <StatsCard
+                title="Total Users"
+                value={1284}
+                description="Registered accounts"
+            />
+
+            <StatsCard
+                title="Active Subscriptions"
+                value={842}
+                description="Pro tier members"
+            />
 
             <AnalyticsChart />
 
