@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { loginMock } from "@/lib/auth/auth-client"
+import { getDashboardByRole } from "@/lib/auth/role-redirect"
 import { useToastStore } from "@/stores/toast.store"
-
-const STORAGE_KEY = "intelcampus_user"
 
 export default function SignInForm() {
 
@@ -23,48 +23,17 @@ export default function SignInForm() {
 
         try {
 
-            const storedUserRaw =
-                localStorage.getItem(STORAGE_KEY)
-
-            if (!storedUserRaw) {
-
-                throw new Error("User not registered")
-
-            }
-
-            const storedUser =
-                JSON.parse(storedUserRaw)
-
-            if (storedUser.email !== email) {
-
-                throw new Error("Invalid email")
-
-            }
+            const user = loginMock(email)
 
             addToast("Login successful", "success")
 
-            // ROLE BASED ROUTING
+            const redirect = getDashboardByRole(user.role)
 
-            if (storedUser.role === "ADMIN") {
-
-                router.push("/admin/dashboard")
-
-            } else if (storedUser.role === "INSTRUCTOR") {
-
-                router.push("/instructor/dashboard")
-
-            } else {
-
-                router.push("/dashboard")
-
-            }
+            router.push(redirect)
 
         } catch (err: any) {
 
-            const message =
-                err?.message || "Login failed"
-
-            addToast(message, "error")
+            addToast("Login failed", "error")
 
         }
 
@@ -121,4 +90,5 @@ export default function SignInForm() {
         </form>
 
     )
+
 }

@@ -1,47 +1,33 @@
-import DashboardLayout from "@/components/layout/dashboard-layout"
+"use client"
+
+import { pushNotification } from "@/services/notification-service"
 
 export default function StudentDashboard() {
 
     return (
 
-        <DashboardLayout>
+        <div>
 
             <h1 className="text-2xl font-bold mb-6">
                 Student Dashboard
             </h1>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <button
+                onClick={() =>
+                    pushNotification(
+                        "New Assignment",
+                        "Math homework uploaded",
+                        "assignment"
+                    )
+                }
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+            >
 
-                <div className="border p-4 rounded-lg">
-                    <h2 className="font-semibold">
-                        Attendance
-                    </h2>
-                    <p className="text-3xl font-bold">
-                        88%
-                    </p>
-                </div>
+                Test Notification
 
-                <div className="border p-4 rounded-lg">
-                    <h2 className="font-semibold">
-                        Assignments
-                    </h2>
-                    <p className="text-3xl font-bold">
-                        3
-                    </p>
-                </div>
+            </button>
 
-                <div className="border p-4 rounded-lg">
-                    <h2 className="font-semibold">
-                        Notifications
-                    </h2>
-                    <p className="text-3xl font-bold">
-                        4
-                    </p>
-                </div>
-
-            </div>
-
-        </DashboardLayout>
+        </div>
 
     )
 

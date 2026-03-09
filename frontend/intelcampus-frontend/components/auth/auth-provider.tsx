@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { authService } from "@/services/auth.service"
-import { useAuthStore } from "@/stores/auth.store"
+import { useAuthStore } from "@/stores/auth-store"
 
 export function AuthProvider({
     children,
@@ -10,31 +9,13 @@ export function AuthProvider({
     children: React.ReactNode
 }) {
 
-    const setAuthenticated = useAuthStore(
-        (state) => state.setAuthenticated
-    )
+    const { user } = useAuthStore()
 
     useEffect(() => {
 
-        const verifySession = async () => {
+        console.log("AuthProvider initialized", user)
 
-            try {
-
-                await authService.getCurrentUser()
-
-                setAuthenticated(true)
-
-            } catch {
-
-                setAuthenticated(false)
-
-            }
-
-        }
-
-        verifySession()
-
-    }, [setAuthenticated])
+    }, [user])
 
     return <>{children}</>
 }

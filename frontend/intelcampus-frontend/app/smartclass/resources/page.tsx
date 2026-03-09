@@ -1,40 +1,23 @@
-import DashboardLayout from "@/components/layout/dashboard-layout"
-import { mockResources } from "@/lib/mock/mock-smartclass"
+"use client"
 
-export default function ResourcesPage() {
+import CourseForm from "@/components/smartclass/CourseForm"
+import CourseList from "@/components/smartclass/CourseList"
+
+export default function SmartClassPage() {
 
     return (
 
-        <DashboardLayout>
+        <div className="p-6">
 
             <h1 className="text-2xl font-bold mb-6">
-                Study Resources
+                SmartClass Learning System
             </h1>
 
-            <div className="grid gap-4">
+            <CourseForm />
 
-                {mockResources.map((resource) => (
+            <CourseList />
 
-                    <div
-                        key={resource.id}
-                        className="border rounded-lg p-4"
-                    >
-
-                        <h2 className="font-semibold">
-                            {resource.title}
-                        </h2>
-
-                        <p className="text-sm text-muted-foreground">
-                            {resource.type}
-                        </p>
-
-                    </div>
-
-                ))}
-
-            </div>
-
-        </DashboardLayout>
+        </div>
 
     )
 

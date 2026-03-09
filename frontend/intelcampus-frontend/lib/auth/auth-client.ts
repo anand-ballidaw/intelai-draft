@@ -1,72 +1,88 @@
-"use client";
+export type UserRole =
+    | "director"
+    | "principal"
+    | "teacher"
+    | "student"
+    | "parent"
+    | "driver"
+    | "admin"
+    | "finance"
 
-import { mockUsers, MockUser } from "@/lib/mock/mock-users";
-import { UserRole } from "@/lib/auth/roles";
-
-const STORAGE_KEY = "intelcampus_user";
-
-
-
-export type { UserRole } from "@/lib/auth/roles";
-
-
-/* -----------------------------
-LOGIN
-------------------------------*/
-
-export function login(email: string, password: string): MockUser {
-    const user = mockUsers.find(
-        (u) => u.email === email && u.password === password
-    );
-
-    if (!user) {
-        throw new Error("Invalid credentials");
-    }
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-
-    return user;
+export interface AuthUser {
+    id: string
+    name: string
+    email: string
+    role: UserRole
+    institution: string
 }
 
-/* -----------------------------
-LOGOUT
-------------------------------*/
+const STORAGE_KEY = "intelcampus_user"
 
-export function logout() {
-    localStorage.removeItem(STORAGE_KEY);
-}
+export function getAuthUser(): AuthUser | null {
 
-/* -----------------------------
-GET CURRENT USER
-------------------------------*/
+    if (typeof window === "undefined") return null
 
-export function getCurrentUser(): MockUser | null {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
+    const data = localStorage.getItem(STORAGE_KEY)
 
-    return JSON.parse(raw);
-}
+    if (!data) return null
 
-/* -----------------------------
-COMPATIBILITY FUNCTIONS
-These are required by existing code
-------------------------------*/
-
-export function getAuthUser(): MockUser | null {
-    return getCurrentUser();
+    return JSON.parse(data)
 }
 
 export function isAuthenticated(): boolean {
-    return !!localStorage.getItem(STORAGE_KEY);
+
+    return !!getAuthUser()
+
+}
+
+export function loginMock(email: string): AuthUser {
+
+    let role: UserRole = "student"
+
+    if (email.includes("admin")) role = "admin"
+    else if (email.includes("principal")) role = "principal"
+    else if (email.includes("teacher")) role = "teacher"
+    else if (email.includes("driver")) role = "driver"
+    else if (email.includes("finance")) role = "finance"
+
+    const user: AuthUser = {
+
+        id: "1",
+        name: email.split("@")[0],
+        email,
+        role,
+        institution: "IntelCampus Demo",
+
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
+
+    return user
+}
+
+export function logout() {
+
+    localStorage.removeItem(STORAGE_KEY)
+
 }
 
 export function hasRole(role: UserRole): boolean {
-    const user = getCurrentUser();
-    if (!user) return false;
 
-    return user.role === role;
+    const user = getAuthUser()
+
+    return user?.role === role
+
 }
 
+/* Temporary mock subscription system
+   Later this will come from backend subscription API */
+
 export function hasActiveSubscription(): boolean {
-    return true;
+
+    const user = getAuthUser()
+
+    if (!user) return false
+
+    return true
+
 }

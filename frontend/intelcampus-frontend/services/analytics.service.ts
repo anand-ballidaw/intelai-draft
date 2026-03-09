@@ -1,30 +1,7 @@
-import { apiClient } from "@/lib/api/api-client"
+import { apiRequest } from "./api"
 
-export interface CourseAnalytics {
+export async function getDashboardStats() {
 
-    courseId: number
-
-    totalStudents: number
-
-    completedStudents: number
-
-    averageProgress: number
-
-    averageQuizScore: number
-
-}
-
-export const analyticsService = {
-
-    async getCourseAnalytics(
-        courseId: number
-    ): Promise<CourseAnalytics> {
-
-        const res = await apiClient.get(
-            `/analytics/course/${courseId}`
-        )
-
-        return res.data
-    }
+    return apiRequest("/analytics/dashboard")
 
 }

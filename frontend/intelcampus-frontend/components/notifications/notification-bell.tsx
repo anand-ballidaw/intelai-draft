@@ -1,11 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { mockNotifications } from "@/lib/mock/mock-notifications"
+import { useNotificationStore } from "@/stores/notification-store"
 
 export default function NotificationBell() {
 
     const [open, setOpen] = useState(false)
+
+    const { notifications, markAsRead } = useNotificationStore()
+
+    const unread = notifications.filter((n) => !n.read).length
 
     return (
 
@@ -18,9 +22,13 @@ export default function NotificationBell() {
 
                 🔔
 
-                <span className="absolute -top-1 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
-                    {mockNotifications.length}
-                </span>
+                {unread > 0 && (
+
+                    <span className="absolute -top-1 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
+                        {unread}
+                    </span>
+
+                )}
 
             </button>
 
@@ -34,20 +42,24 @@ export default function NotificationBell() {
 
                     <div className="max-h-80 overflow-y-auto">
 
-                        {mockNotifications.map((n) => (
+                        {notifications.map((n) => (
 
-                            <div key={n.id} className="p-3 border-b">
+                            <div
+                                key={n.id}
+                                className="p-3 border-b cursor-pointer hover:bg-gray-50"
+                                onClick={() => markAsRead(n.id)}
+                            >
 
                                 <p className="font-medium text-sm">
                                     {n.title}
                                 </p>
 
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-xs text-gray-600">
                                     {n.message}
                                 </p>
 
                                 <span className="text-xs text-gray-400">
-                                    {n.time}
+                                    {new Date(n.createdAt).toLocaleString()}
                                 </span>
 
                             </div>

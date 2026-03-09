@@ -1,7 +1,19 @@
+"use client"
+
+import { useState } from "react"
 import DashboardLayout from "@/components/layout/dashboard-layout"
 import { mockAttendance } from "@/lib/mock/mock-attendance"
 
 export default function AttendancePage() {
+
+    const [selectedClass, setSelectedClass] = useState("10")
+    const [selectedSection, setSelectedSection] = useState("A")
+
+    const filteredAttendance = mockAttendance.filter(
+        (a) =>
+            a.class === selectedClass &&
+            a.section === selectedSection
+    )
 
     return (
 
@@ -11,6 +23,36 @@ export default function AttendancePage() {
                 Attendance
             </h1>
 
+            {/* Filters */}
+
+            <div className="flex gap-4 mb-6">
+
+                <select
+                    value={selectedClass}
+                    onChange={(e) => setSelectedClass(e.target.value)}
+                    className="border px-3 py-2 rounded-md"
+                >
+
+                    <option value="10">Class 10</option>
+                    <option value="9">Class 9</option>
+
+                </select>
+
+                <select
+                    value={selectedSection}
+                    onChange={(e) => setSelectedSection(e.target.value)}
+                    className="border px-3 py-2 rounded-md"
+                >
+
+                    <option value="A">Section A</option>
+                    <option value="B">Section B</option>
+
+                </select>
+
+            </div>
+
+            {/* Table */}
+
             <div className="border rounded-lg overflow-hidden">
 
                 <table className="w-full">
@@ -18,37 +60,31 @@ export default function AttendancePage() {
                     <thead className="bg-muted">
 
                         <tr>
-
-                            <th className="text-left p-3">Name</th>
-                            <th className="text-left p-3">Role</th>
-                            <th className="text-left p-3">Date</th>
-                            <th className="text-left p-3">Status</th>
-
+                            <th className="p-3 text-left">Student</th>
+                            <th className="p-3 text-left">Status</th>
                         </tr>
 
                     </thead>
 
                     <tbody>
 
-                        {mockAttendance.map((record) => (
+                        {filteredAttendance.map((a) => (
 
-                            <tr key={record.id} className="border-t">
+                            <tr key={a.id} className="border-t">
 
-                                <td className="p-3">{record.name}</td>
-                                <td className="p-3">{record.role}</td>
-                                <td className="p-3">{record.date}</td>
+                                <td className="p-3">{a.name}</td>
+
                                 <td className="p-3">
 
-                                    <span
-                                        className={`px-2 py-1 rounded text-sm ${record.status === "Present"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-red-100 text-red-700"
-                                            }`}
-                                    >
-
-                                        {record.status}
-
-                                    </span>
+                                    {a.status === "Present" ? (
+                                        <span className="text-green-600">
+                                            Present
+                                        </span>
+                                    ) : (
+                                        <span className="text-red-600">
+                                            Absent
+                                        </span>
+                                    )}
 
                                 </td>
 

@@ -1,53 +1,28 @@
-export const authService = {
+import { apiRequest } from "./api"
 
-    async login(email: string, password: string) {
+export async function loginApi(email: string, password: string) {
 
-        const raw = localStorage.getItem("intelcampus_user")
+    return apiRequest("/auth/login", {
 
-        if (!raw) {
-            throw new Error("User not registered")
-        }
+        method: "POST",
 
-        const user = JSON.parse(raw)
+        body: JSON.stringify({
+            email,
+            password
+        })
 
-        if (user.email !== email) {
-            throw new Error("Invalid email")
-        }
+    })
 
-        return user
-    },
+}
 
-    async register(data: any) {
+export async function registerApi(data: any) {
 
-        const user = {
-            id: crypto.randomUUID(),
-            name: data.name,
-            email: data.email,
-            role: "STUDENT",
-            subscriptionActive: true
-        }
+    return apiRequest("/auth/register", {
 
-        localStorage.setItem(
-            "intelcampus_user",
-            JSON.stringify(user)
-        )
+        method: "POST",
 
-        return user
-    },
+        body: JSON.stringify(data)
 
-    async getCurrentUser() {
-
-        const raw = localStorage.getItem("intelcampus_user")
-
-        if (!raw) return null
-
-        return JSON.parse(raw)
-    },
-
-    async logout() {
-
-        localStorage.removeItem("intelcampus_user")
-
-    }
+    })
 
 }
