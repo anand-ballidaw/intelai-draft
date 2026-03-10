@@ -1,10 +1,4 @@
-import ProtectedRoute from "@/components/auth/protected-route"
-import LessonLayout from "@/components/lessons/lesson-layout"
-import LessonPlayer from "@/components/lessons/lesson-player"
-import LessonProgress from "@/components/lessons/lesson-progress"
-import CourseProgress from "@/components/lessons/course-progress"
-import { useEffect } from "react"
-import { useLessonProgressStore } from "@/stores/lesson-progress.store"
+"use client"
 
 interface PageProps {
     params: {
@@ -14,30 +8,53 @@ interface PageProps {
 }
 
 export default function LessonPage({ params }: PageProps) {
-    const { courseId, lessonId } = params
-
-    const setLastLesson = useLessonProgressStore((s) => s.setLastLesson)
-
-    useEffect(() => {
-        setLastLesson(courseId, Number(lessonId))
-    }, [courseId, lessonId, setLastLesson])
-
-    const lessonKey = `${courseId}-${lessonId}`
 
     return (
-        <ProtectedRoute>
-            <LessonLayout courseId={courseId}>
-                <div className="space-y-6">
-                    <CourseProgress />
 
-                    <LessonPlayer
-                        title={`Lesson ${lessonId}`}
-                        videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                    />
+        <div className="space-y-6 p-6">
 
-                    <LessonProgress lessonKey={lessonKey} />
-                </div>
-            </LessonLayout>
-        </ProtectedRoute>
+            <h1 className="text-2xl font-bold">
+                Lesson
+            </h1>
+
+            <div className="border rounded-lg p-4 bg-white shadow">
+
+                <p className="text-sm text-gray-600">
+                    Course ID:
+                </p>
+
+                <p className="font-medium">
+                    {params.courseId}
+                </p>
+
+            </div>
+
+            <div className="border rounded-lg p-4 bg-white shadow">
+
+                <p className="text-sm text-gray-600">
+                    Lesson ID:
+                </p>
+
+                <p className="font-medium">
+                    {params.lessonId}
+                </p>
+
+            </div>
+
+            <div className="border rounded-lg p-6 bg-white shadow">
+
+                <h2 className="text-lg font-semibold mb-2">
+                    Lesson Content
+                </h2>
+
+                <p className="text-gray-600">
+                    Lesson content and quizzes will appear here.
+                </p>
+
+            </div>
+
+        </div>
+
     )
+
 }

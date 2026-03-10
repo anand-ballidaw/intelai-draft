@@ -1,16 +1,29 @@
 import ProtectedRoute from "@/components/auth/protected-route"
-import CreateCourseForm from "@/components/courses/create-course-form"
 
 export default function CreateCoursePage() {
+
     return (
-        <ProtectedRoute requiredRole="INSTRUCTOR">
-            <div className="space-y-6">
+
+        <ProtectedRoute requiredRole="teacher">
+
+            <div className="space-y-6 p-6">
+
                 <h1 className="text-2xl font-semibold">
                     Create Course
                 </h1>
 
-                <CreateCourseForm />
+                <div className="border rounded-lg p-6 bg-white shadow">
+
+                    <p className="text-gray-600">
+                        Course creation form will appear here.
+                    </p>
+
+                </div>
+
             </div>
+
         </ProtectedRoute>
+
     )
+
 }

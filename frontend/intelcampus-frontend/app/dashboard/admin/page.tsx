@@ -1,41 +1,46 @@
+"use client"
+
 import ProtectedRoute from "@/components/auth/protected-route"
-import DashboardGrid from "@/components/dashboard/dashboard-grid"
-import StatsCard from "@/components/dashboard/dashboard-layout"
+import StatCard from "@/components/dashboard/StatCard"
 
 export default function AdminDashboard() {
+
     return (
-        <ProtectedRoute requiredRole="ADMIN">
-            <div>
-                <h1 className="text-2xl font-semibold mb-8">
+
+        <ProtectedRoute requiredRole="admin">
+
+            <div className="space-y-8">
+
+                <h1 className="text-2xl font-semibold">
                     Platform Overview
                 </h1>
 
-                <DashboardGrid>
-                    <StatsCard
-                        title="Total Users"
-                        value={1284}
-                        description="Registered accounts"
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <StatCard
+                        title="Total Students"
+                        value={1240}
+                        description="Across all institutions"
                     />
 
-                    <StatsCard
-                        title="Active Subscriptions"
-                        value={842}
-                        description="Pro tier members"
+                    <StatCard
+                        title="Total Teachers"
+                        value={85}
+                        description="Active educators"
                     />
 
-                    <StatsCard
-                        title="Total Courses"
-                        value={73}
-                        description="Published on platform"
+                    <StatCard
+                        title="Revenue"
+                        value="$12,500"
+                        description="Monthly subscription revenue"
                     />
 
-                    <StatsCard
-                        title="Monthly Revenue"
-                        value="₹3,42,000"
-                        description="Current billing cycle"
-                    />
-                </DashboardGrid>
+                </div>
+
             </div>
+
         </ProtectedRoute>
+
     )
+
 }

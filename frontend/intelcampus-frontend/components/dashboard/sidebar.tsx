@@ -2,26 +2,25 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { getAuthUser } from "@/lib/auth/auth-client"
-import { navigationConfig } from "@/lib/navigation/navigation-config"
 
-export default function Sidebar() {
+interface SidebarItem {
+    label: string
+    href: string
+}
+
+interface SidebarProps {
+    items?: SidebarItem[]
+}
+
+export default function Sidebar({ items = [] }: SidebarProps) {
 
     const pathname = usePathname()
 
-    const user = getAuthUser()
-
-    if (!user) {
-        return null
-    }
-
-    const items = navigationConfig[user.role]
-
     return (
 
-        <aside className="w-64 border-r bg-background h-screen p-6">
+        <aside className="w-64 bg-white border-r h-screen p-4">
 
-            <h2 className="text-xl font-semibold mb-8">
+            <h2 className="text-lg font-bold mb-6">
                 IntelCampus
             </h2>
 
@@ -36,10 +35,9 @@ export default function Sidebar() {
                         <Link
                             key={item.href}
                             href={item.href}
-                            className={`block px-3 py-2 rounded-md text-sm transition
-                ${active
-                                    ? "bg-primary text-primary-foreground"
-                                    : "hover:bg-muted"
+                            className={`block p-2 rounded transition ${active
+                                    ? "bg-blue-600 text-white"
+                                    : "hover:bg-gray-100"
                                 }`}
                         >
                             {item.label}
@@ -54,4 +52,5 @@ export default function Sidebar() {
         </aside>
 
     )
+
 }

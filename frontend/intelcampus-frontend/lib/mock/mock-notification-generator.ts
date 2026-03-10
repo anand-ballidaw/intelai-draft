@@ -1,18 +1,34 @@
-import { useNotificationStore } from "@/stores/notification-store"
+import { addNotification } from "@/stores/notification-store"
+
+type NotificationType =
+    | "finance"
+    | "transport"
+    | "announcement"
+    | "assignment"
+    | "meeting"
+    | "visitor"
+    | "system"
+
+interface Notification {
+    id: string
+    title: string
+    message: string
+    type: NotificationType
+    createdAt: string
+    read: boolean
+}
 
 export function generateMockNotification() {
 
-    const { addNotification } = useNotificationStore.getState()
+    const notification: Notification = {
 
-    const notification = {
+        id: Math.random().toString(36).substring(2),
 
-        id: Date.now().toString(),
+        title: "System Update",
 
-        title: "New Assignment",
+        message: "A new system update has been deployed.",
 
-        message: "Math assignment uploaded for Class 10",
-
-        type: "info",
+        type: "system",
 
         createdAt: new Date().toISOString(),
 

@@ -1,9 +1,7 @@
 interface Props {
-
     title: string
     value: number | string
     description?: string
-
 }
 
 export default function StatCard({
@@ -25,11 +23,9 @@ export default function StatCard({
             </p>
 
             {description && (
-
                 <p className="text-xs text-gray-400 mt-1">
                     {description}
                 </p>
-
             )}
 
         </div>

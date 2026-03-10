@@ -1,42 +1,31 @@
-import type { Metadata } from "next";
-import StatsCard from "@/components/dashboard/dashboard-layout";
-import { AnalyticsChart } from "@/components/dashboard/analytics-chart";
-import { RecentActivity } from "@/components/dashboard/recent-activity";
-import ActivityTimeline from "@/components/activity/activity-timeline";
-
-export const metadata: Metadata = {
-    title: "Dashboard",
-};
+import StatCard from "@/components/dashboard/StatCard"
 
 export default function DashboardPage() {
+
     return (
-        <div className="space-y-10">
-            <div>
-                <h1 className="text-xl sm:text-2xl font-semibold">
-                    Welcome to IntelCampus Dashboard
-                </h1>
-                <p className="mt-2 text-muted-foreground">
-                    Overview of your platform performance and analytics.
-                </p>
-            </div>
 
-            <StatsCard
-                title="Total Users"
-                value={1284}
-                description="Registered accounts"
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <StatCard
+                title="Total Students"
+                value={1250}
+                description="Active enrolled students"
             />
 
-            <StatsCard
-                title="Active Subscriptions"
-                value={842}
-                description="Pro tier members"
+            <StatCard
+                title="Total Teachers"
+                value={85}
+                description="Faculty members"
             />
 
-            <AnalyticsChart />
+            <StatCard
+                title="Attendance Rate"
+                value="92%"
+                description="Average attendance"
+            />
 
-            <ActivityTimeline />
-
-            <RecentActivity />
         </div>
-    );
+
+    )
+
 }

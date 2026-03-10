@@ -1,21 +1,52 @@
-import { apiClient } from "@/lib/api/api-client"
-
 export const subscriptionService = {
-    getPlans: async () => {
-        const res = await apiClient.get("/subscriptions/plans")
-        return res.data
+
+    async getPlans() {
+
+        return [
+            {
+                id: "basic",
+                name: "Basic",
+                price: 0
+            },
+            {
+                id: "pro",
+                name: "Pro",
+                price: 29
+            },
+            {
+                id: "enterprise",
+                name: "Enterprise",
+                price: 99
+            }
+        ]
+
     },
 
-    getCurrentPlan: async () => {
-        const res = await apiClient.get("/subscriptions/current")
-        return res.data
+    async getCurrentPlan() {
+
+        return {
+            id: "basic",
+            name: "Basic",
+            price: 0
+        }
+
     },
 
-    upgradePlan: async (planId: string) => {
-        const res = await apiClient.post("/subscriptions/upgrade", {
-            planId,
-        })
+    async upgradePlan(planId: string) {
 
-        return res.data
+        return {
+            success: true,
+            planId
+        }
+
     },
+
+    async createCheckoutSession(data: { plan: string }) {
+
+        return {
+            checkoutUrl: "/dashboard"
+        }
+
+    }
+
 }
