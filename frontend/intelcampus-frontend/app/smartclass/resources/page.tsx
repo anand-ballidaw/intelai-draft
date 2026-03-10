@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-"use client"
-
-import CourseForm from "@/components/smartclass/CourseForm"
-import CourseList from "@/components/smartclass/CourseList"
-
-export default function SmartClassPage() {
-
-    return (
-
-        <div className="p-6">
-
-            <h1 className="text-2xl font-bold mb-6">
-                SmartClass Learning System
-            </h1>
-
-            <CourseForm />
-
-            <CourseList />
-
-        </div>
-=======
 import DashboardLayout from "@/components/layout/dashboard-layout"
 import { mockResources } from "@/lib/mock/mock-smartclass"
 
@@ -57,7 +35,6 @@ export default function ResourcesPage() {
             </div>
 
         </DashboardLayout>
->>>>>>> 71cdadf2118a068df47f425da09753ab7facf044
 
     )
 

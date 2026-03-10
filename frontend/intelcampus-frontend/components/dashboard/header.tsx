@@ -1,11 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-<<<<<<< HEAD
-import { useAuthStore } from "@/stores/auth-store";
-=======
 import { useAuthStore } from "@/stores/auth.store";
->>>>>>> 71cdadf2118a068df47f425da09753ab7facf044
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
 import { Menu } from "lucide-react";

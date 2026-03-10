@@ -1,31 +1,3 @@
-<<<<<<< HEAD
-import { apiRequest } from "./api"
-
-export async function loginApi(email: string, password: string) {
-
-    return apiRequest("/auth/login", {
-
-        method: "POST",
-
-        body: JSON.stringify({
-            email,
-            password
-        })
-
-    })
-
-}
-
-export async function registerApi(data: any) {
-
-    return apiRequest("/auth/register", {
-
-        method: "POST",
-
-        body: JSON.stringify(data)
-
-    })
-=======
 export const authService = {
 
     async login(email: string, password: string) {
@@ -77,6 +49,5 @@ export const authService = {
         localStorage.removeItem("intelcampus_user")
 
     }
->>>>>>> 71cdadf2118a068df47f425da09753ab7facf044
 
 }

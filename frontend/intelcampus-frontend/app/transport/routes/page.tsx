@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-"use client"
-
-import RouteTable from "../components/RouteTable"
-
-export default function RoutesPage() {
-    return (
-        <div className="p-6">
-
-            <h1 className="text-2xl font-bold mb-6">
-                Transport Routes
-            </h1>
-
-            <RouteTable />
-
-        </div>
-    )
-=======
 import DashboardLayout from "@/components/layout/dashboard-layout"
 import { mockRoutes } from "@/lib/mock/mock-transport"
 
@@ -67,5 +49,4 @@ export default function RoutesPage() {
 
     )
 
->>>>>>> 71cdadf2118a068df47f425da09753ab7facf044
 }
