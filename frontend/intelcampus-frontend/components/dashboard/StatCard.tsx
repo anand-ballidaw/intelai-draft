@@ -2,10 +2,15 @@ interface Props {
 
     title: string
     value: number | string
+    description?: string
 
 }
 
-export default function StatCard({ title, value }: Props) {
+export default function StatCard({
+    title,
+    value,
+    description
+}: Props) {
 
     return (
 
@@ -18,6 +23,14 @@ export default function StatCard({ title, value }: Props) {
             <p className="text-2xl font-bold mt-2">
                 {value}
             </p>
+
+            {description && (
+
+                <p className="text-xs text-gray-400 mt-1">
+                    {description}
+                </p>
+
+            )}
 
         </div>
 

@@ -1,38 +1,50 @@
 "use client"
 
 import Link from "next/link"
-import { roleNavigation } from "../config/roleNavigation"
 
-interface SidebarProps {
+export interface SidebarProps {
     role: string
 }
 
+const links = [
+
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Courses", href: "/dashboard/courses" },
+    { label: "SmartClass", href: "/smartclass" },
+    { label: "Assignments", href: "/dashboard/assignments" },
+    { label: "Finance", href: "/dashboard/finance" },
+    { label: "Transport", href: "/transport/routes" }
+
+]
+
 export default function Sidebar({ role }: SidebarProps) {
 
-    const items = roleNavigation[role] || []
-
     return (
-        <div className="w-64 h-screen bg-gray-900 text-white p-4">
 
-            <h2 className="text-xl font-bold mb-6">
+        <aside className="w-64 bg-white border-r h-screen p-4">
+
+            <h2 className="text-lg font-bold mb-6">
                 IntelCampus
             </h2>
 
-            <ul className="space-y-3">
+            <nav className="space-y-2">
 
-                {items.map((item, index) => (
-                    <li key={index}>
-                        <Link
-                            href={item.path}
-                            className="block p-2 rounded hover:bg-gray-700"
-                        >
-                            {item.name}
-                        </Link>
-                    </li>
+                {links.map((link) => (
+
+                    <Link
+                        key={link.href}
+                        href={link.href}
+                        className="block p-2 rounded hover:bg-gray-100"
+                    >
+                        {link.label}
+                    </Link>
+
                 ))}
 
-            </ul>
+            </nav>
 
-        </div>
+        </aside>
+
     )
+
 }
