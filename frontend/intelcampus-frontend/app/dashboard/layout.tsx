@@ -1,84 +1,23 @@
-"use client"
-
-<<<<<<< HEAD
-import { useEffect } from "react"
-import { useRouter, usePathname } from "next/navigation"
-import { useAuthStore } from "@/stores/auth-store"
-import { hasPermission } from "@/lib/auth/check-permission"
-
-export default function DashboardLayout({
-    children
-}: {
-    children: React.ReactNode
-}) {
-
-    const router = useRouter()
-    const pathname = usePathname()
-
-    const user = useAuthStore((state) => state.user)
-
-    useEffect(() => {
-
-        if (!user) {
-            router.push("/signin")
-            return
-        }
-
-        const allowed = hasPermission(user.role, pathname)
-
-        if (!allowed) {
-            router.push("/dashboard")
-        }
-
-    }, [user, pathname, router])
-
-    return (
-        <div>
-            {children}
-        </div>
-=======
 import { ReactNode } from "react"
-import Sidebar from "@/components/dashboard/sidebar"
-import Topbar from "@/components/dashboard/topbar"
-import ProtectedRoute from "@/components/auth/protected-route"
+import Navbar from "@/components/Navbar"
+import Sidebar from "@/components/Sidebar"
 
-interface DashboardLayoutProps {
+interface Props {
     children: ReactNode
 }
 
-export default function DashboardLayout({
-    children
-}: DashboardLayoutProps) {
-
+export default function DashboardLayout({ children }: Props) {
     return (
+        <div className="flex h-screen">
+            <Sidebar />
 
-        <ProtectedRoute>
+            <div className="flex flex-col flex-1">
+                <Navbar />
 
-            <div className="flex h-screen w-full">
-
-                {/* SIDEBAR */}
-
-                <Sidebar />
-
-                {/* MAIN CONTENT */}
-
-                <div className="flex flex-col flex-1">
-
-                    <Topbar />
-
-                    <main className="flex-1 overflow-y-auto p-6">
-
-                        {children}
-
-                    </main>
-
-                </div>
-
+                <main className="p-6 bg-gray-50 flex-1 overflow-y-auto">
+                    {children}
+                </main>
             </div>
-
-        </ProtectedRoute>
-
->>>>>>> 71cdadf2118a068df47f425da09753ab7facf044
+        </div>
     )
-
 }
