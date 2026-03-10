@@ -1,6 +1,6 @@
 import ProtectedRoute from "@/components/auth/protected-route"
 import DashboardGrid from "@/components/dashboard/dashboard-grid"
-import StatsCard from "@/components/dashboard/stats-card"
+import StatsCard from "@/components/dashboard/dashboard-layout"
 
 export default function InstructorDashboard() {
     return (

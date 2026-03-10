@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import StatsCard from "@/components/dashboard/stats-card";
+import StatsCard from "@/components/dashboard/dashboard-layout";
 import { AnalyticsChart } from "@/components/dashboard/analytics-chart";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
+import ActivityTimeline from "@/components/activity/activity-timeline";
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -32,6 +33,8 @@ export default function DashboardPage() {
             />
 
             <AnalyticsChart />
+
+            <ActivityTimeline />
 
             <RecentActivity />
         </div>
