@@ -1,24 +1,36 @@
-import ProtectedRoute from "@/components/auth/protected-route"
+"use client"
+
+import DashboardStats from "@/components/analytics/DashboardStats"
+import DashboardStatus from "@/components/analytics/DashboardStatus"
+import AdmissionsChart from "@/components/analytics/AdmissionsChart"
+import AttendanceChart from "@/components/analytics/AttendanceChart"
+import RevenueChart from "@/components/analytics/RevenueChart"
 
 export default function AnalyticsPage() {
 
     return (
 
-        <ProtectedRoute requiredRole="teacher">
+        <div className="p-6 space-y-8">
 
-            <div className="space-y-10 p-6">
+            <h1 className="text-2xl font-bold">
+                AI Analytics Dashboard
+            </h1>
 
-                <h1 className="text-2xl font-semibold">
-                    Course Analytics
-                </h1>
+            <DashboardStats />
 
-                <p className="text-gray-600">
-                    Analytics and course performance insights will appear here.
-                </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <AdmissionsChart />
+
+                <AttendanceChart />
 
             </div>
 
-        </ProtectedRoute>
+            <RevenueChart />
+
+            <DashboardStatus />
+
+        </div>
 
     )
 

@@ -1,70 +1,97 @@
 "use client"
 
-import { useState } from "react"
-import { useAttendanceStore } from "@/stores/attendance-store"
+import React, { useState } from "react"
+import { AttendanceRecord } from "./AttendanceCard"
 
-export default function AttendanceForm() {
+interface AttendanceFormProps {
+    onCreate: (record: AttendanceRecord) => void
+}
 
-    const { markAttendance } = useAttendanceStore()
+export default function AttendanceForm({ onCreate }: AttendanceFormProps) {
 
     const [studentName, setStudentName] = useState("")
     const [className, setClassName] = useState("")
-    const [status, setStatus] = useState("present")
+    const [status, setStatus] = useState<"present" | "absent">("present")
 
-    function handleSubmit(e: React.FormEvent) {
+    const handleSubmit = (e: React.FormEvent) => {
 
         e.preventDefault()
 
-        markAttendance({
+        const record: AttendanceRecord = {
 
-            id: Date.now().toString(),
+            id: crypto.randomUUID(),
 
             studentName,
 
             className,
 
-            date: new Date().toISOString(),
+            status,
 
-            status: status as any
+            date: new Date().toISOString().split("T")[0]
 
-        })
+        }
+
+        onCreate(record)
 
         setStudentName("")
         setClassName("")
-
+        setStatus("present")
     }
 
     return (
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form
+            onSubmit={handleSubmit}
+            className="border p-4 rounded-lg bg-white shadow-sm mb-6"
+        >
 
-            <input
-                placeholder="Student Name"
-                value={studentName}
-                onChange={(e) => setStudentName(e.target.value)}
-                className="border p-2 rounded w-full"
-            />
-
-            <input
-                placeholder="Class"
-                value={className}
-                onChange={(e) => setClassName(e.target.value)}
-                className="border p-2 rounded w-full"
-            />
-
-            <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="border p-2 rounded w-full"
-            >
-
-                <option value="present">Present</option>
-                <option value="absent">Absent</option>
-
-            </select>
-
-            <button className="bg-green-600 text-white px-4 py-2 rounded">
+            <h2 className="text-lg font-semibold mb-4">
                 Mark Attendance
+            </h2>
+
+            <div className="mb-3">
+                <input
+                    type="text"
+                    placeholder="Student Name"
+                    value={studentName}
+                    onChange={(e) => setStudentName(e.target.value)}
+                    required
+                    className="w-full border rounded px-3 py-2"
+                />
+            </div>
+
+            <div className="mb-3">
+                <input
+                    type="text"
+                    placeholder="Class"
+                    value={className}
+                    onChange={(e) => setClassName(e.target.value)}
+                    className="w-full border rounded px-3 py-2"
+                />
+            </div>
+
+            <div className="mb-4">
+
+                <select
+                    value={status}
+                    onChange={(e) =>
+                        setStatus(e.target.value as "present" | "absent")
+                    }
+                    className="w-full border rounded px-3 py-2"
+                >
+
+                    <option value="present">Present</option>
+                    <option value="absent">Absent</option>
+
+                </select>
+
+            </div>
+
+            <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+            >
+                Save Attendance
             </button>
 
         </form>

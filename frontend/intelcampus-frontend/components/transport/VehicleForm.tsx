@@ -16,7 +16,7 @@ export default function VehicleForm() {
         e.preventDefault()
 
         addVehicle({
-            id: Date.now().toString(),
+            id: crypto.randomUUID(),
             number,
             driver,
             capacity
@@ -24,6 +24,7 @@ export default function VehicleForm() {
 
         setNumber("")
         setDriver("")
+        setCapacity(40)
     }
 
     return (
@@ -35,6 +36,7 @@ export default function VehicleForm() {
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
                 className="border p-2 rounded w-full"
+                required
             />
 
             <input
@@ -42,6 +44,7 @@ export default function VehicleForm() {
                 value={driver}
                 onChange={(e) => setDriver(e.target.value)}
                 className="border p-2 rounded w-full"
+                required
             />
 
             <input
@@ -50,9 +53,13 @@ export default function VehicleForm() {
                 value={capacity}
                 onChange={(e) => setCapacity(Number(e.target.value))}
                 className="border p-2 rounded w-full"
+                required
             />
 
-            <button className="bg-blue-600 text-white px-4 py-2 rounded">
+            <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
                 Add Vehicle
             </button>
 

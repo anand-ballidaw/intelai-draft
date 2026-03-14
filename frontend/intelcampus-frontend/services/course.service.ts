@@ -1,37 +1,21 @@
-import { apiClient } from "@/lib/api/api-client"
+import { Course } from "@/core/domain/Course"
 
-export interface Course {
-    id: number
-    title: string
-    description?: string
-    instructor: string
-    students: number
-}
+export class CourseService {
 
-export const courseService = {
+    static createCourse(
+        title: string,
+        instructor: string,
+        lessons: number
+    ): Course {
 
-    async getCourses(): Promise<Course[]> {
+        return {
+            id: crypto.randomUUID(),
+            title,
+            instructor,
+            lessons,
+            createdAt: new Date().toISOString()
+        }
 
-        const res = await apiClient.get("/courses")
-
-        return res.data
-    },
-
-    async getCourse(courseId: string): Promise<Course> {
-
-        const res = await apiClient.get(`/courses/${courseId}`)
-
-        return res.data
-    },
-
-    async createCourse(data: any) {
-
-        const res = await apiClient.post(
-            "/courses",
-            data
-        )
-
-        return res.data
     }
 
 }

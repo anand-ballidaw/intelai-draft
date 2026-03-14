@@ -1,50 +1,36 @@
 "use client"
 
-import StatCard from "./StatCard"
-import { useAnalyticsStore } from "@/stores/analytics-store"
+import { DashboardStats } from "@/types/analytics"
 
-export default function DashboardStats() {
+interface DashboardStatsProps {
+    stats: DashboardStats
+}
 
-    const { stats } = useAnalyticsStore()
+export default function DashboardStatsComponent({ stats }: DashboardStatsProps) {
 
     return (
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
-            <StatCard
-                title="Students"
-                value={stats.totalStudents}
-            />
+            <div className="bg-white p-4 rounded-lg shadow">
+                <p className="text-sm text-gray-500">Students</p>
+                <p className="text-2xl font-bold">{stats.students}</p>
+            </div>
 
-            <StatCard
-                title="Teachers"
-                value={stats.totalTeachers}
-            />
+            <div className="bg-white p-4 rounded-lg shadow">
+                <p className="text-sm text-gray-500">Teachers</p>
+                <p className="text-2xl font-bold">{stats.teachers}</p>
+            </div>
 
-            <StatCard
-                title="Courses"
-                value={stats.totalCourses}
-            />
+            <div className="bg-white p-4 rounded-lg shadow">
+                <p className="text-sm text-gray-500">Courses</p>
+                <p className="text-2xl font-bold">{stats.courses}</p>
+            </div>
 
-            <StatCard
-                title="Admissions"
-                value={stats.totalAdmissions}
-            />
-
-            <StatCard
-                title="Vehicles"
-                value={stats.totalVehicles}
-            />
-
-            <StatCard
-                title="Employees"
-                value={stats.totalEmployees}
-            />
-
-            <StatCard
-                title="Revenue"
-                value={`₹ ${stats.totalRevenue}`}
-            />
+            <div className="bg-white p-4 rounded-lg shadow">
+                <p className="text-sm text-gray-500">Revenue</p>
+                <p className="text-2xl font-bold">₹{stats.revenue}</p>
+            </div>
 
         </div>
 

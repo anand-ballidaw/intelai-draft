@@ -1,6 +1,4 @@
 import "./globals.css"
-import { AuthProvider } from "@/components/auth/auth-provider"
-import ToastContainer from "@/components/ui/toast-container"
 
 export default function RootLayout({
   children,
@@ -9,22 +7,12 @@ export default function RootLayout({
 }) {
 
   return (
-
     <html lang="en">
+      <body>
 
-      <body className="bg-background text-foreground">
-
-        <AuthProvider>
-
-          {children}
-
-          <ToastContainer />
-
-        </AuthProvider>
+        {children}
 
       </body>
-
     </html>
-
   )
 }

@@ -1,65 +1,89 @@
 "use client"
 
-import { useState } from "react"
-import { useSmartClassStore } from "@/stores/smartclass-store"
+import React, { useState } from "react"
+import { Course } from "./CourseCard"
 
-export default function CourseForm() {
+interface CourseFormProps {
+    onCreate: (course: Course) => void
+}
 
-    const { addCourse } = useSmartClassStore()
+export default function CourseForm({ onCreate }: CourseFormProps) {
 
     const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [teacher, setTeacher] = useState("")
+    const [instructor, setInstructor] = useState("")
+    const [lessons, setLessons] = useState(0)
 
     const handleSubmit = (e: React.FormEvent) => {
 
         e.preventDefault()
 
-        addCourse({
+        const course: Course = {
 
-            id: Date.now().toString(),
+            id: crypto.randomUUID(),
 
             title,
 
-            description,
+            instructor,
 
-            teacher
+            lessons
 
-        })
+        }
+
+        onCreate(course)
 
         setTitle("")
-        setDescription("")
-        setTeacher("")
-
+        setInstructor("")
+        setLessons(0)
     }
 
     return (
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+            onSubmit={handleSubmit}
+            className="border p-4 rounded-lg bg-white shadow-sm mb-6"
+        >
 
-            <input
-                placeholder="Course Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="border p-2 rounded w-full"
-            />
+            <h2 className="text-lg font-semibold mb-4">
+                Create Course
+            </h2>
 
-            <input
-                placeholder="Teacher"
-                value={teacher}
-                onChange={(e) => setTeacher(e.target.value)}
-                className="border p-2 rounded w-full"
-            />
+            <div className="mb-3">
+                <input
+                    type="text"
+                    placeholder="Course Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    className="w-full border rounded px-3 py-2"
+                />
+            </div>
 
-            <textarea
-                placeholder="Course Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="border p-2 rounded w-full"
-            />
+            <div className="mb-3">
+                <input
+                    type="text"
+                    placeholder="Instructor"
+                    value={instructor}
+                    onChange={(e) => setInstructor(e.target.value)}
+                    required
+                    className="w-full border rounded px-3 py-2"
+                />
+            </div>
 
-            <button className="bg-blue-600 text-white px-4 py-2 rounded">
-                Add Course
+            <div className="mb-4">
+                <input
+                    type="number"
+                    placeholder="Number of Lessons"
+                    value={lessons}
+                    onChange={(e) => setLessons(Number(e.target.value))}
+                    className="w-full border rounded px-3 py-2"
+                />
+            </div>
+
+            <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+            >
+                Create Course
             </button>
 
         </form>

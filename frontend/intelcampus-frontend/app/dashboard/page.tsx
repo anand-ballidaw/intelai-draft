@@ -1,31 +1,30 @@
-import StatCard from "@/components/dashboard/StatCard"
+"use client"
 
-export default function DashboardPage() {
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { getDashboardRoute } from "@/lib/dashboard/role-dashboard-router"
+import { useAuthStore } from "@/stores/auth-store"
+
+export default function DashboardRedirect() {
+
+    const router = useRouter()
+
+    const user = useAuthStore((state) => state.user)
+
+    useEffect(() => {
+
+        if (!user) return
+
+        const route = getDashboardRoute(user.role)
+
+        router.replace(route)
+
+    }, [user, router])
 
     return (
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            <StatCard
-                title="Total Students"
-                value={1250}
-                description="Active enrolled students"
-            />
-
-            <StatCard
-                title="Total Teachers"
-                value={85}
-                description="Faculty members"
-            />
-
-            <StatCard
-                title="Attendance Rate"
-                value="92%"
-                description="Average attendance"
-            />
-
+        <div className="p-6 text-gray-500">
+            Redirecting to your dashboard...
         </div>
-
     )
 
 }

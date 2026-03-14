@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { getAuthUser } from "@/lib/auth/auth-client"
 import { useState, useEffect } from "react"
-import GlobalSearch from "@/components/search/global-search"
+import GlobalSearch from "@/components/search/GlobalSearch"
 import NotificationBell from "@/components/notifications/notification-bell"
 
 export default function Topbar() {
@@ -23,7 +23,7 @@ export default function Topbar() {
 
     const handleLogout = () => {
         localStorage.removeItem("intelcampus_user")
-        router.replace("/login")
+        router.replace("/signin")
     }
 
     const toggleTheme = () => {

@@ -1,35 +1,42 @@
 "use client"
 
-import { useEffect } from "react"
+import { ReactNode } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { useAuthStore } from "@/stores/auth-store"
-import { roleAccess } from "@/config/roleAccess"
+import { hasPermission } from "@/services/permission.service"
+import { normalizeRole } from "@/types/role"
 
-export default function RouteGuard({ children }: { children: React.ReactNode }) {
+interface Props {
+    children: ReactNode
+}
+
+export default function RouteGuard({ children }: Props) {
 
     const router = useRouter()
     const pathname = usePathname()
 
-    const user = useAuthStore((state) => state.user)
+    const { user } = useAuthStore()
 
-    useEffect(() => {
+    if (!user) {
 
-        if (!user) {
-            router.push("/signin")
-            return
-        }
+        router.push("/signin")
+        return null
 
-        const allowedRoutes = roleAccess[user.role] || []
+    }
 
-        const isAllowed = allowedRoutes.some(route =>
-            pathname.startsWith(route)
+    const role = normalizeRole(user.role)
+
+    const allowed = hasPermission(role, pathname)
+
+    if (!allowed) {
+
+        return (
+            <div className="p-6 text-red-500">
+                You do not have permission to access this page.
+            </div>
         )
 
-        if (!isAllowed) {
-            router.push(`/dashboard/${user.role}`)
-        }
-
-    }, [user, pathname, router])
+    }
 
     return <>{children}</>
 

@@ -1,17 +1,9 @@
 export interface DashboardStats {
 
-    totalStudents: number
-
-    totalTeachers: number
-
-    totalCourses: number
-
-    totalAdmissions: number
-
-    totalVehicles: number
-
-    totalEmployees: number
-
-    totalRevenue: number
+    students: number
+    teachers: number
+    courses: number
+    revenue: number
+    attendanceRate: number
 
 }

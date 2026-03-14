@@ -1,35 +1,24 @@
 "use client"
 
-import { useSmartClassStore } from "@/stores/smartclass-store"
+import React from "react"
+import CourseCard, { Course } from "./CourseCard"
 
-export default function CourseList() {
+interface CourseListProps {
+    courses: Course[]
+}
 
-    const { courses } = useSmartClassStore()
+export default function CourseList({ courses }: CourseListProps) {
 
     return (
 
-        <div className="grid grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
             {courses.map((course) => (
 
-                <div
+                <CourseCard
                     key={course.id}
-                    className="border rounded-lg p-4"
-                >
-
-                    <h3 className="font-semibold text-lg">
-                        {course.title}
-                    </h3>
-
-                    <p className="text-sm text-gray-600">
-                        {course.description}
-                    </p>
-
-                    <p className="text-sm mt-2">
-                        Teacher: {course.teacher}
-                    </p>
-
-                </div>
+                    course={course}
+                />
 
             ))}
 
