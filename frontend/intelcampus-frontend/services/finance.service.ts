@@ -1,20 +1,14 @@
-import { apiRequest } from "./api"
 import { Invoice } from "@/core/domain/Invoice"
+import { fetchFees, submitPayment } from "@/repositories/finance.repository"
 
 export async function getFees(): Promise<Invoice[]> {
 
-    return apiRequest("/finance/fees")
+    return fetchFees()
 
 }
 
 export async function payFee(data: Invoice): Promise<Invoice> {
 
-    return apiRequest("/finance/pay", {
-
-        method: "POST",
-
-        body: JSON.stringify(data)
-
-    })
+    return submitPayment(data)
 
 }

@@ -1,16 +1,27 @@
-import { workflowService } from "./workflow.service"
+type EventHandler = (payload: any) => void
 
-class EventBusService {
+class EventBus {
 
-    emit(type: string, payload?: any) {
+    private events: Record<string, EventHandler[]> = {}
 
-        workflowService.trigger({
-            type,
-            payload
-        })
+    on(event: string, handler: EventHandler) {
+
+        if (!this.events[event]) {
+            this.events[event] = []
+        }
+
+        this.events[event].push(handler)
+
+    }
+
+    emit(event: string, payload?: any) {
+
+        if (!this.events[event]) return
+
+        this.events[event].forEach(handler => handler(payload))
 
     }
 
 }
 
-export const eventBus = new EventBusService()
+export const eventBus = new EventBus()

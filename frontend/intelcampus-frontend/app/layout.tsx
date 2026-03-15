@@ -1,3 +1,6 @@
+
+import "@/integrations/email.integration"
+import "@/integrations/whatsapp.integration"
 import "./globals.css"
 
 export default function RootLayout({
