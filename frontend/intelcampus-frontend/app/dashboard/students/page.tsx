@@ -1,31 +1,39 @@
 "use client"
 
-import React, { useState } from "react"
-import StudentForm from "@/components/students/StudentForm"
-import StudentList from "@/components/students/StudentList"
-import { Student } from "@/components/students/StudentCard"
+import { useEffect } from "react"
+import { useStudentStore } from "@/modules/students/student.store"
+import StudentCard from "@/modules/students/components/StudentCard"
 
 export default function StudentsPage() {
 
-    const [students, setStudents] = useState<Student[]>([])
+    const { students, loadStudents } = useStudentStore()
 
-    const handleCreateStudent = (student: Student) => {
+    useEffect(() => {
 
-        setStudents([...students, student])
+        loadStudents()
 
-    }
+    }, [])
 
     return (
 
         <div className="p-6">
 
             <h1 className="text-2xl font-bold mb-6">
-                Student Management
+                Students
             </h1>
 
-            <StudentForm onCreate={handleCreateStudent} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-            <StudentList students={students} />
+                {students.map((student) => (
+
+                    <StudentCard
+                        key={student.id}
+                        student={student}
+                    />
+
+                ))}
+
+            </div>
 
         </div>
 

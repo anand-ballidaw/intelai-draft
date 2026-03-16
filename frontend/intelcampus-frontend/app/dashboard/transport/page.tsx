@@ -1,31 +1,39 @@
 "use client"
 
-import React, { useState } from "react"
-import BusForm from "@/components/transport/BusForm"
-import BusList from "@/components/transport/BusList"
-import { Bus } from "@/components/transport/BusCard"
+import { useEffect } from "react"
+import { useTransportStore } from "@/modules/transport/transport.store"
+import VehicleCard from "@/modules/transport/components/VehicleCard"
 
 export default function TransportPage() {
 
-    const [buses, setBuses] = useState<Bus[]>([])
+    const { vehicles, loadVehicles } = useTransportStore()
 
-    const handleCreateBus = (bus: Bus) => {
+    useEffect(() => {
 
-        setBuses([...buses, bus])
+        loadVehicles()
 
-    }
+    }, [])
 
     return (
 
         <div className="p-6">
 
             <h1 className="text-2xl font-bold mb-6">
-                Transport Management
+                Transport
             </h1>
 
-            <BusForm onCreate={handleCreateBus} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-            <BusList buses={buses} />
+                {vehicles.map((vehicle) => (
+
+                    <VehicleCard
+                        key={vehicle.id}
+                        vehicle={vehicle}
+                    />
+
+                ))}
+
+            </div>
 
         </div>
 

@@ -1,6 +1,6 @@
 "use client"
 
-import DashboardStats from "@/components/analytics/DashboardStats"
+import DashboardStats from "@/components/analytics/DashboardStatus"
 
 export default function DashboardOverviewPage() {
 

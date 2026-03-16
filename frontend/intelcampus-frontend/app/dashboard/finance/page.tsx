@@ -1,31 +1,39 @@
 "use client"
 
-import React, { useState } from "react"
-import InvoiceForm from "@/components/finance/InvoiceForm"
-import InvoiceList from "@/components/finance/InvoiceList"
-import { Invoice } from "@/components/finance/InvoiceCard"
+import { useEffect } from "react"
+import { useFinanceStore } from "@/modules/finance/finance.store"
+import InvoiceCard from "@/modules/finance/components/InvoiceCard"
 
 export default function FinancePage() {
 
-    const [invoices, setInvoices] = useState<Invoice[]>([])
+    const { invoices, loadInvoices } = useFinanceStore()
 
-    const handleCreateInvoice = (invoice: Invoice) => {
+    useEffect(() => {
 
-        setInvoices([...invoices, invoice])
+        loadInvoices()
 
-    }
+    }, [])
 
     return (
 
         <div className="p-6">
 
             <h1 className="text-2xl font-bold mb-6">
-                Finance & Fee Management
+                Finance
             </h1>
 
-            <InvoiceForm onCreate={handleCreateInvoice} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-            <InvoiceList invoices={invoices} />
+                {invoices.map((invoice) => (
+
+                    <InvoiceCard
+                        key={invoice.id}
+                        invoice={invoice}
+                    />
+
+                ))}
+
+            </div>
 
         </div>
 

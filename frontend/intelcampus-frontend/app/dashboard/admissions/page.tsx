@@ -1,27 +1,26 @@
 "use client"
 
-import LeadForm from "@/components/admissions/LeadForm"
-import LeadList from "@/components/admissions/LeadList"
-import { useAdmissionsStore } from "@/stores/admissions-store"
+import { Lead } from "@/modules/admissions/types/admissions.types"
 
 export default function AdmissionsPage() {
 
-    const { leads } = useAdmissionsStore()
+    const leads: Lead[] = []
 
     return (
 
         <div className="p-6">
 
-            <h1 className="text-2xl font-bold mb-6">
-                Marketing & Admissions
+            <h1 className="text-2xl font-bold mb-4">
+                Admissions
             </h1>
 
-            <LeadForm />
-
-            <LeadList leads={leads} />
+            {leads.length === 0 && (
+                <p className="text-gray-500">
+                    No leads yet
+                </p>
+            )}
 
         </div>
 
     )
-
 }

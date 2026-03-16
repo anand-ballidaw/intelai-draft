@@ -1,27 +1,42 @@
-type EventHandler = (payload: any) => void
+type EventCallback = (payload: any) => void
 
 class EventBus {
 
-    private events: Record<string, EventHandler[]> = {}
+    private listeners: Record<string, EventCallback[]> = {}
 
-    on(event: string, handler: EventHandler) {
+    publish(event: string, payload?: any) {
 
-        if (!this.events[event]) {
-            this.events[event] = []
-        }
+        const callbacks = this.listeners[event]
 
-        this.events[event].push(handler)
+        if (!callbacks) return
 
+        callbacks.forEach(cb => cb(payload))
     }
 
     emit(event: string, payload?: any) {
+        this.publish(event, payload)
+    }
 
-        if (!this.events[event]) return
+    subscribe(event: string, callback: EventCallback) {
 
-        this.events[event].forEach(handler => handler(payload))
+        if (!this.listeners[event]) {
+            this.listeners[event] = []
+        }
 
+        this.listeners[event].push(callback)
+    }
+
+    unsubscribe(event: string, callback: EventCallback) {
+
+        const callbacks = this.listeners[event]
+
+        if (!callbacks) return
+
+        this.listeners[event] = callbacks.filter(cb => cb !== callback)
     }
 
 }
 
 export const eventBus = new EventBus()
+
+export const eventBusService = eventBus

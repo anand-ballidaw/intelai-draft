@@ -1,37 +1,21 @@
 "use client"
 
-import GlobalSearch from "@/components/search/GlobalSearch"
-
 export default function Topbar() {
 
     return (
 
-        <header className="bg-white border-b px-6 py-3 flex items-center justify-between">
+        <div className="w-full h-14 border-b flex items-center justify-between px-6 bg-white">
 
-            {/* Mobile menu */}
-            <button className="md:hidden text-xl">
+            <h2 className="font-semibold">
+                IntelCampus Dashboard
+            </h2>
 
-                ☰
-
-            </button>
-
-            {/* Search */}
-            <div className="flex-1 max-w-lg">
-
-                <GlobalSearch />
-
+            <div className="text-sm text-gray-500">
+                admin@intelcampus.ai
             </div>
 
-            {/* Notification */}
-            <div className="flex items-center gap-4">
-
-                🔔
-                👤
-
-            </div>
-
-
-        </header>
+        </div>
 
     )
+
 }

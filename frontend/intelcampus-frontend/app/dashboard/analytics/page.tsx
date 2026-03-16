@@ -1,6 +1,6 @@
 "use client"
 
-import DashboardStats from "@/components/analytics/DashboardStats"
+import DashboardStats from "@/components/analytics/DashboardStatus"
 import DashboardStatus from "@/components/analytics/DashboardStatus"
 import AdmissionsChart from "@/components/analytics/AdmissionsChart"
 import AttendanceChart from "@/components/analytics/AttendanceChart"
